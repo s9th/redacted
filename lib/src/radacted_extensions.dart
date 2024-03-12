@@ -380,6 +380,9 @@ class __RedactedFillWidgetState extends State<_RedactedFillWidget> {
       ),
       child: widget.child,
       onEnd: () {
+        if (!mounted) {
+          return;
+        }
         setState(() {
           colored = !colored;
         });
@@ -413,6 +416,9 @@ class _MeasuredWidgetState extends State<MeasuredWidget> {
     return MeasureSize(
       onChange: (newSize) {
         if (size == null && newSize != Size.zero) {
+          if (!mounted) {
+            return;
+          }
           setState(() {
             size = newSize;
             newChild = widget.onSizeLoaded(newSize) as Container;
