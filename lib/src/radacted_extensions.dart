@@ -18,12 +18,10 @@ extension RedactedText on Text {
         }
 
         final span = TextSpan(text: text, style: style);
-        final tp = TextPainter(
-            text: span, textDirection: textDirection ?? TextDirection.ltr);
+        final tp = TextPainter(text: span, textDirection: textDirection ?? TextDirection.ltr);
         tp.layout(maxWidth: constraints.maxWidth);
 
-        TextSelection selection =
-            TextSelection(baseOffset: 0, extentOffset: text.length);
+        TextSelection selection = TextSelection(baseOffset: 0, extentOffset: text.length);
         List<TextBox> boxes = tp.getBoxesForSelection(selection);
 
         List<Widget> children = [];
@@ -35,10 +33,7 @@ extension RedactedText on Text {
               child: Container(
                 margin: boxes.indexOf(box) != boxes.length
                     ? EdgeInsets.only(
-                        bottom: boxes.isNotEmpty &&
-                                boxes.indexOf(box) - 1 != boxes.length
-                            ? 2
-                            : 0)
+                        bottom: boxes.isNotEmpty && boxes.indexOf(box) - 1 != boxes.length ? 2 : 0)
                     : null,
                 width: box.right,
                 height: box.bottom - box.top,
@@ -169,8 +164,7 @@ extension RedactedCenter on Center {
 }
 
 extension RedactedSizedbox on SizedBox {
-  SizedBox redact(BuildContext context,
-      {RedactedConfiguration? configuration}) {
+  SizedBox redact(BuildContext context, {RedactedConfiguration? configuration}) {
     return SizedBox(
       height: height,
       key: key,
@@ -199,8 +193,7 @@ extension RedactedPadding on Padding {
 }
 
 extension RedactedExpanded on Expanded {
-  Expanded redact(BuildContext context,
-      {RedactedConfiguration? configuration}) {
+  Expanded redact(BuildContext context, {RedactedConfiguration? configuration}) {
     return Expanded(
       flex: flex,
       key: key,
@@ -214,13 +207,11 @@ extension RedactedExpanded on Expanded {
 }
 
 extension RedactedAspectRatio on AspectRatio {
-  AspectRatio redact(BuildContext context,
-      {RedactedConfiguration? configuration}) {
+  AspectRatio redact(BuildContext context, {RedactedConfiguration? configuration}) {
     return AspectRatio(
       key: key,
       aspectRatio: aspectRatio,
-      child: child?.redacted(
-          context: context, redact: true, configuration: configuration),
+      child: child?.redacted(context: context, redact: true, configuration: configuration),
     );
   }
 }
@@ -253,10 +244,7 @@ extension RedactedImageContainer on Container {
           padding: padding,
           transform: transform,
           transformAlignment: transformAlignment,
-          child: child is Icon ||
-                  child is Image ||
-                  child is SvgPicture ||
-                  child is Text
+          child: child is Icon || child is Image || child is SvgPicture || child is Text
               ? null
               : child!.redacted(
                   context: context,
@@ -276,15 +264,13 @@ extension RedactedAlig on Align {
       heightFactor: heightFactor,
       key: key,
       widthFactor: widthFactor,
-      child: child?.redacted(
-          context: context, redact: true, configuration: configuration),
+      child: child?.redacted(context: context, redact: true, configuration: configuration),
     );
   }
 }
 
 extension RedactedPositioned on Positioned {
-  Positioned redact(BuildContext context,
-      {RedactedConfiguration? configuration}) {
+  Positioned redact(BuildContext context, {RedactedConfiguration? configuration}) {
     return Positioned(
       key: key,
       bottom: bottom,
@@ -293,8 +279,7 @@ extension RedactedPositioned on Positioned {
       right: right,
       top: top,
       width: width,
-      child: child.redacted(
-          context: context, redact: true, configuration: configuration),
+      child: child.redacted(context: context, redact: true, configuration: configuration),
     );
   }
 }
@@ -348,8 +333,7 @@ extension RedactedInkWell on InkWell {
       splashColor: splashColor,
       splashFactory: splashFactory,
       statesController: statesController,
-      child: child?.redacted(
-          context: context, redact: true, configuration: configuration),
+      child: child?.redacted(context: context, redact: true, configuration: configuration),
     );
   }
 }
@@ -369,8 +353,10 @@ class __RedactedFillWidgetState extends State<_RedactedFillWidget> {
   @override
   void initState() {
     Future.delayed(widget.configuration.animationDuration, () {
-      setState(() {
-        colored = !colored;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          colored = !colored;
+        });
       });
     });
     super.initState();
@@ -435,8 +421,7 @@ class _MeasuredWidgetState extends State<MeasuredWidget> {
       },
       child: newChild == null
           ? Opacity(opacity: 0, child: widget.child)
-          : _RedactedFillWidget(
-              configuration: widget.configuration, child: newChild!),
+          : _RedactedFillWidget(configuration: widget.configuration, child: newChild!),
     );
   }
 }
