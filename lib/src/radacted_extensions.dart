@@ -354,6 +354,9 @@ class __RedactedFillWidgetState extends State<_RedactedFillWidget> {
   void initState() {
     Future.delayed(widget.configuration.animationDuration, () {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) {
+          return;
+        }
         setState(() {
           colored = !colored;
         });
